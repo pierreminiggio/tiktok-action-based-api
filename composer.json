@@ -11,6 +11,11 @@
             "App\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "AppTest\\": "tests/"
+        }
+    },
     "config": {
         "sort-packages": true
     },
@@ -19,8 +24,13 @@
         "pierreminiggio/config-provider": "dev-main",
         "pierreminiggio/github-action-run-starter-and-artifact-downloader": "dev-main"
     },
-    "scripts": {},
     "require-dev": {
         "phpunit/phpunit": "10.0.x-dev"
-    }
+    },
+    "scripts": {
+        "test": "bash vendor/bin/phpunit tests/"
+    },
+    "scripts-descriptions": {
+        "test": "Run all tests!"
+    },
 }

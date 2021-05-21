@@ -11,6 +11,12 @@ class ProfileAndVideosCreationAndUpdationCommand
      */
     public function createFromJsonResponseAndReturnVideos(array $jsonReponse): array
     {
-        return [];
+        $entities = [];
+
+        foreach ($jsonReponse as $jsonReponseEntry) {
+            $entities[] = [];
+        }
+        
+        return $entities;
     }
 }
