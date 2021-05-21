@@ -48,6 +48,7 @@ class App
 
         $videos = $this->command->createFromJsonResponseAndReturnVideos($jsonResponse);
 
-        var_dump($videos);
+        http_response_code(200);
+        echo json_encode($videos);
     }
 }
