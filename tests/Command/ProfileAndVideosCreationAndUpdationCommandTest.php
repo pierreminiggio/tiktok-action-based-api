@@ -2,7 +2,9 @@
 
 namespace AppTest\Command;
 
+use App\Command\AuthorCreateAndUpdateCommand;
 use App\Command\ProfileAndVideosCreationAndUpdationCommand;
+use App\Command\VideoCreateAndUpdateCommand;
 use App\Entity\Author;
 use App\Entity\Video;
 use PHPUnit\Framework\TestCase;
@@ -16,12 +18,24 @@ class ProfileAndVideosCreationAndUpdationCommandTest extends TestCase
             __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'pierreVideos.json'
         );
         $mockedJsonResponse = json_decode($mockedResponse, true);
+        $expectedVideoCount = count($mockedJsonResponse);
 
-        $command = new ProfileAndVideosCreationAndUpdationCommand();
+        $authorCommandMock = $this->createMock(AuthorCreateAndUpdateCommand::class);
+        $authorCommandMock->expects(self::once())->method('execute')->willReturn(1);
+
+        $videoCommandMock = $this->createMock(VideoCreateAndUpdateCommand::class);
+        $videoCommandMock->expects(self::exactly($expectedVideoCount))->method('execute')->willReturn(
+            ...range(1, $expectedVideoCount)
+        );
+
+        $command = new ProfileAndVideosCreationAndUpdationCommand(
+            $authorCommandMock,
+            $videoCommandMock
+        );
 
         $entities = $command->createFromJsonResponseAndReturnVideos($mockedJsonResponse);
 
-        self::assertSame(count($mockedJsonResponse), count($entities));
+        self::assertSame($expectedVideoCount, count($entities));
 
         foreach ($entities as $entityIndex => $entity) {
             $this->assertIsGoodVideo($mockedJsonResponse[$entityIndex], $entity);
