@@ -3,6 +3,7 @@
 namespace AppTest\Command;
 
 use App\Command\ProfileAndVideosCreationAndUpdationCommand;
+use App\Entity\Video;
 use PHPUnit\Framework\TestCase;
 
 class ProfileAndVideosCreationAndUpdationCommandTest extends TestCase
@@ -20,6 +21,10 @@ class ProfileAndVideosCreationAndUpdationCommandTest extends TestCase
         $entities = $command->createFromJsonResponseAndReturnVideos($mockedJsonResponse);
 
         self::assertSame(count($mockedJsonResponse), count($entities));
+
+        foreach ($entities as $entity) {
+            self::assertInstanceOf(Video::class, $entity);
+        }
     }
 
 }

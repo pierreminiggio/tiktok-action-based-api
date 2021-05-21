@@ -2,6 +2,8 @@
 
 namespace App\Command;
 
+use App\Entity\Video;
+
 class ProfileAndVideosCreationAndUpdationCommand
 {
     /**
@@ -14,9 +16,9 @@ class ProfileAndVideosCreationAndUpdationCommand
         $entities = [];
 
         foreach ($jsonReponse as $jsonReponseEntry) {
-            $entities[] = [];
+            $entities[] = new Video();
         }
-        
+
         return $entities;
     }
 }
