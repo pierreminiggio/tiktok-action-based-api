@@ -2,13 +2,11 @@
 
 namespace App\Entity;
 
-class Video
+class Author
 {
     public function __construct(
         public string $id,
-        public string $caption,
-        public Author $author,
-        public string $url
+        public string $handle
     )
     {
     }

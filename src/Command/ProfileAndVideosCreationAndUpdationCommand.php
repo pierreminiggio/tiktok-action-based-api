@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Entity\Author;
 use App\Entity\Video;
 
 class ProfileAndVideosCreationAndUpdationCommand
@@ -16,7 +17,18 @@ class ProfileAndVideosCreationAndUpdationCommand
         $entities = [];
 
         foreach ($jsonReponse as $jsonReponseEntry) {
-            $entities[] = new Video();
+            $videoId = $jsonReponseEntry['id'];
+            $authorJsonReponseEntry = $jsonReponseEntry['author'];
+            $author = new Author(
+                $authorJsonReponseEntry['id'],
+                $authorJsonReponseEntry['uniqueId']
+            );
+            $entities[] = new Video(
+                $videoId,
+                $jsonReponseEntry['desc'],
+                $author,
+                'https://www.tiktok.com/@' . $author->handle . '/video/' . $videoId
+            );
         }
 
         return $entities;
