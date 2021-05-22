@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'apiToken' => '',
     'crawlerProjects' => [
         [
             'token' => '',

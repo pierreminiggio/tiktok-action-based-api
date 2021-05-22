@@ -22,13 +22,32 @@ $fetcher = new DatabaseFetcher(new DatabaseConnection(
     DatabaseConnection::UTF8_MB4
 ));
 
-(new App(
+$app = new App(
     $configProvider,
     new ActionRunner((new GithubActionRunStarterAndArtifactDownloaderFactory())->make()),
     new ProfileAndVideosCreationAndUpdationCommand(
         new AuthorCreateAndUpdateCommand($fetcher),
         new VideoCreateAndUpdateCommand($fetcher)
     )
-))->run();
+);
+
+/** @var string $requestUrl */
+$requestUrl = $_SERVER['REQUEST_URI'];
+
+/** @var string|null $queryParameters */
+$queryParameters = ! empty($_SERVER['QUERY_STRING']) ? ('?' . $_SERVER['QUERY_STRING']) : null;
+
+/** @var string $calledEndPoint */
+$calledEndPoint = $queryParameters
+    ? str_replace($queryParameters, '', $requestUrl)
+    : $requestUrl
+;
+
+if (strlen($calledEndPoint) > 1 && substr($calledEndPoint, -1) === '/') {
+    /** @var string $calledEndPoint */
+    $calledEndPoint = substr($calledEndPoint, 0, -1);
+}
+
+$app->run($requestUrl, $queryParameters, $_SERVER['HTTP_AUTHORIZATION'] ?? null);
 
 exit;
