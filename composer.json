@@ -22,6 +22,7 @@
     "minimum-stability": "dev",
     "require": {
         "pierreminiggio/config-provider": "dev-main",
+        "pierreminiggio/database-fetcher": "dev-main",
         "pierreminiggio/github-action-run-starter-and-artifact-downloader": "dev-main"
     },
     "require-dev": {
@@ -32,5 +33,5 @@
     },
     "scripts-descriptions": {
         "test": "Run all tests!"
-    },
+    }
 }

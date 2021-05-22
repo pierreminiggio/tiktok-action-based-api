@@ -23,6 +23,7 @@ class App
         $projects = $config['crawlerProjects'];
         $project = $projects[array_rand($projects)];
 
+        set_time_limit(360);
         $response = $this->runner->run(
             $project['token'],
             $project['account'],
