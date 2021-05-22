@@ -36,7 +36,7 @@ class AuthorCreateAndUpdateCommand
                     $table
                 )->insertInto(
                     'tiktok_id, handle',
-                    ':tikok_id, :handle'
+                    ':tiktok_id, :handle'
                 ),
                 [
                     'tiktok_id' => $entity->id,
