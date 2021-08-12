@@ -61,7 +61,7 @@ class App
             $project['account'],
             $project['project'],
             $username,
-            20
+            80
         );
 
         $jsonResponse = json_decode($response, true);
