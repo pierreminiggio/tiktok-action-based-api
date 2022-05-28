@@ -27,6 +27,7 @@ class ActionRunner
                 owner: $account,
                 repo: $project,
                 workflowIdOrWorkflowFileName: 'get-videos.yml',
+                refreshTime: 330,
                 inputs: [
                     'username' => $username,
                     'numberOfVideos' => (string) $numberOfVideos
