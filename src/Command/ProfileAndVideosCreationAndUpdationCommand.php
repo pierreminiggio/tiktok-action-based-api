@@ -20,7 +20,7 @@ class ProfileAndVideosCreationAndUpdationCommand
      *
      * @return Video[]
      */
-    public function createFromJsonResponseAndReturnVideos(array $jsonReponse): array
+    public function createFromPythonJsonResponseAndReturnVideos(array $jsonReponse): array
     {
 
         if (count($jsonReponse) === 0) {
@@ -58,6 +58,42 @@ class ProfileAndVideosCreationAndUpdationCommand
             $this->videoCommand->execute($entity, $authorIds[$entity->author->id]);
         }
 
+        return $entities;
+    }
+
+    /**
+     * @param array[] $scrapedVideos
+     *
+     * @return Video[]
+     */
+    public function createFromNodeJsonResponseAndReturnVideos(array $scrapedVideos, Author $author): array
+    {
+        $authorId = $this->authorCommand->execute($author);
+
+        /** @var Video[] $entities */
+        $entities = [];
+
+        foreach ($scrapedVideos as $scrapedVideo) {
+            $id = $scrapedVideo['id'] ?? null;
+            $url = $scrapedVideo['url'] ?? null;
+            $legend = $scrapedVideo['legend'] ?? null;
+
+            if (! $id || ! $url || ! $legend) {
+                continue;
+            }
+
+            $entity = new Video(
+                $id,
+                $legend,
+                $author,
+                $url
+            );
+
+            $entities[] = $entity;
+
+            $this->videoCommand->execute($entity, $authorId);
+        }
+        
         return $entities;
     }
 }

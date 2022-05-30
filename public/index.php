@@ -6,6 +6,7 @@ use App\App;
 use App\Command\AuthorCreateAndUpdateCommand;
 use App\Command\ProfileAndVideosCreationAndUpdationCommand;
 use App\Command\VideoCreateAndUpdateCommand;
+use App\Query\AuthorFinderQuery;
 use App\Service\ActionRunner;
 use PierreMiniggio\ConfigProvider\ConfigProvider;
 use PierreMiniggio\DatabaseConnection\DatabaseConnection;
@@ -24,6 +25,7 @@ $fetcher = new DatabaseFetcher(new DatabaseConnection(
 
 $app = new App(
     $configProvider,
+    new AuthorFinderQuery($fetcher),
     new ActionRunner((new GithubActionRunStarterAndArtifactDownloaderFactory())->make()),
     new ProfileAndVideosCreationAndUpdationCommand(
         new AuthorCreateAndUpdateCommand($fetcher),

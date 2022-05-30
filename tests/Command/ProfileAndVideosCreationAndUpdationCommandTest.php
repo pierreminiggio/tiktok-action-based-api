@@ -33,7 +33,7 @@ class ProfileAndVideosCreationAndUpdationCommandTest extends TestCase
             $videoCommandMock
         );
 
-        $entities = $command->createFromJsonResponseAndReturnVideos($mockedJsonResponse);
+        $entities = $command->createFromPythonJsonResponseAndReturnVideos($mockedJsonResponse);
 
         self::assertSame($expectedVideoCount, count($entities));
 
